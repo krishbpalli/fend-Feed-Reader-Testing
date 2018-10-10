@@ -31,30 +31,67 @@ $(function() {
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
-
+         it('URL is defined',function(){
+           for(const feed of allFeeds){
+             expect(feed.url).toBeDefined();
+             expect(feed.url.length).not.toBe(0);
+           }
+         });
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
+    it('name is defined',function(){
+      for(const feed of allFeeds){
+        expect(feed.name).toBeDefined();
+        expect(feed.name.length).not.toBe(0);
+      }
     });
+  });
 
 
     /* TODO: Write a new test suite named "The menu" */
+describe('The menu',function(){
+
 
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
+         it('should be hidden', function () {
+           const body = document.getElementsByTagName('body')[0];
+           const hidden = body.classList.contains('menu-hidden');
+           expect(hidden).toBe(true);
+       });
 
          /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
-
+          it('visibility changes on click', function () {
+                      const icon = document.querySelector('.menu-icon-link');
+                      $(icon).click();
+                      expect(document.body.classList.contains('menu-hidden')).toBe(false);
+                      $(icon).click();
+                      expect(document.body.classList.contains('menu-hidden')).toBe(true);
+                  });
+              });
     /* TODO: Write a new test suite named "Initial Entries" */
+describe('Initial Entries',function(){
+
+  beforeEach(function(done){
+           loadFeed(0, done);
+       });
+
+       it('exists upon loading', function() {
+           var entry = $('.feed .entry');
+           expect(entry.length).toBeGreaterThan(0);
+       });
+
+   });
 
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
@@ -64,9 +101,29 @@ $(function() {
          */
 
     /* TODO: Write a new test suite named "New Feed Selection" */
-
+describe('New Feed Selection', function(){
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+         let feed = null;
+       let newFeed = null;
+
+       beforeEach(function(done){
+           loadFeed(0, function () {
+               feed = document.querySelector('.feed').innerHTML;
+               done();
+           });
+       });
+
+       it('is loading new feed', function(done){
+
+           loadFeed(1, function(){
+               newFeed = document.querySelector('.feed').innerHTML;
+               expect(newFeed).not.toBe(feed);
+               done();
+           });
+
+       });
+   });
 }());
