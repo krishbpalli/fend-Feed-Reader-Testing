@@ -91,7 +91,7 @@ describe('Initial Entries',function(){
            loadFeed(0, done);
        });
 
-       it('exists upon loading', function() {
+       it('loadFeed function completes its work', function() {
            var entry = $('.feed .entry');
            expect(entry.length).toBeGreaterThan(0);
        });
@@ -116,7 +116,7 @@ describe('New Feed Selection', function(){
            });
        });
 
-       it('is loading new feed', function(done){
+       it('is loading new feed and content changes', function(done){
 
            loadFeed(1, function(){
                newFeed = document.querySelector('.feed').innerHTML;
